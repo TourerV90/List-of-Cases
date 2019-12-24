@@ -2,6 +2,7 @@ package com.turaapp.listofcases;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    DbHelper dbhelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Task task = new Task(edittext.getText().toString(),false);
                 adapter.addTask(task);
+                SQLiteDatabase db = dbhelper.getWritableDatabase();
             }
         });
+        dbhelper = new DbHelper(this);
     }
 }
