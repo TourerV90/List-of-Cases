@@ -2,8 +2,10 @@ package com.turaapp.listofcases;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
                 Task task = new Task(edittext.getText().toString(),false);
                 adapter.addTask(task);
                 SQLiteDatabase db = dbhelper.getWritableDatabase();
+                ContentValues cv = new ContentValues();
+                cv.put("text",task.title);
+                cv.put("check",0);
+                long id = db.insert("Tasks",null,cv);
+                Log.d("qweqweqwe", String.valueOf(id));
             }
         });
         dbhelper = new DbHelper(this);
