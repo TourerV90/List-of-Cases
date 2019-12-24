@@ -1,11 +1,15 @@
 package com.turaapp.listofcases.Adapters;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.turaapp.listofcases.Models.Task;
@@ -47,8 +51,8 @@ public class TaskAdapter extends BaseAdapter {
         if (view == null) {
             view = inflater.inflate(R.layout.item_task, parent, false);
         }
-        Task t = getTask(position);
-        TextView tv = view.findViewById(R.id.finaltextview);
+        final Task t = getTask(position);
+        final TextView tv = view.findViewById(R.id.finaltextview);
         Button delete = view.findViewById(R.id.delete);
         tv.setText(t.title);
 
@@ -56,6 +60,21 @@ public class TaskAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 delTask(position);
+            }
+        });
+        final CheckBox checkbox = view.findViewById(R.id.checkbox);
+        checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!t.check){
+                    t.check = true;
+                    tv.setText(Html.fromHtml("<s>"+tv.getText().toString()+"</s>"));
+                }
+                else {
+                    t.check = false;
+                    tv.setText(Html.fromHtml(""+tv.getText().toString()+""));
+                }
+
             }
         });
         return view;
